@@ -24,7 +24,7 @@ public class PersistentTransactionDAO implements TransactionDAO {
 
     public PersistentTransactionDAO(DBHelper dbHelper) {
         this.dbHelper = dbHelper;
-        this.dateFormat = new SimpleDateFormat("m-d-yyyy", Locale.ENGLISH);
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     }
 
     @Override
@@ -46,9 +46,9 @@ public class PersistentTransactionDAO implements TransactionDAO {
     public List<Transaction> getAllTransactionLogs() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        //query to get all transactions ordered by id
+        //query to get all transactions ordered by date newest at top
         Cursor cursor = db.rawQuery(
-                "SELECT * FROM " + DBConstants.TRANSACTION_TABLE + " ORDER BY " + DBConstants.TRANSACTION_ID + " DESC ",
+                "SELECT * FROM " + DBConstants.TRANSACTION_TABLE + " ORDER BY " + DBConstants.TRANSACTION_DATE + " DESC ",
                 null
         );
 
@@ -82,7 +82,7 @@ public class PersistentTransactionDAO implements TransactionDAO {
 
         //select limited number of rows from transaction table
         Cursor cursor = db.rawQuery(
-                "SELECT * FROM " + DBConstants.TRANSACTION_TABLE + " ORDER BY " + DBConstants.TRANSACTION_ID + " DESC " +
+                "SELECT * FROM " + DBConstants.TRANSACTION_TABLE + " ORDER BY " + DBConstants.TRANSACTION_DATE + " DESC " +
                 " LIMIT ?;"
                 , new String[]{Integer.toString(limit)}
                 );

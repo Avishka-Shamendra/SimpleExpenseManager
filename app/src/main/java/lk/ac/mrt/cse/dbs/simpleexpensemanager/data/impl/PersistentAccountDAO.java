@@ -97,6 +97,19 @@ public class PersistentAccountDAO implements AccountDAO {
 
     @Override
     public void addAccount(Account account){
+
+        //check if an already an account with this no exist
+        Account alreadyExistingAccount = null;
+        try {
+            alreadyExistingAccount = getAccount(account.getAccountNo());
+        } catch (InvalidAccountException e) {
+            e.printStackTrace();
+        }
+        if (alreadyExistingAccount!=null){
+            System.out.println("Account already exists.");
+            return;
+        }
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentvalues = new ContentValues();
