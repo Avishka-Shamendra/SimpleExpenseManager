@@ -120,7 +120,6 @@ public class PersistentAccountDAO implements AccountDAO {
 
         //insert new row to account table
         db.insert(DBConstants.ACCOUNT_TABLE, null, contentvalues);
-        db.close();
     }
 
     @Override
